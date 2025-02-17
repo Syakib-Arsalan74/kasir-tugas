@@ -28,4 +28,15 @@ class AuthController extends Controller
    function viewRegister (){
         return view('register');
    }
+
+   function register (Request $request){
+
+   }
+
+   function logout (Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerate();
+        return redirect()->route('login');
+   }
 }
