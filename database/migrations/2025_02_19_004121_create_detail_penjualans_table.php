@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('detail_penjualans', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('penjualan_id');
+            $table->unsignedBigInteger('product_id');
+            $table->integer('jumlah');
+            $table->integer('subtotal');
             $table->timestamps();
+
+            $table->foreign('penjualan_id')->references('id')->on('penjualans')->onDelete('casecade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('casecade');
         });
     }
 

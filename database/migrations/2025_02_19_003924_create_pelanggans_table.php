@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('pelanggans', function (Blueprint $table) {
             $table->id();
+            $table->string('namaPelanggan');
+            $table->string('alamat');
+            $table->string('noTelp');
             $table->timestamps();
         });
     }
