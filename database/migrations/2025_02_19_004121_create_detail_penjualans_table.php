@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('subtotal');
             $table->timestamps();
 
-            $table->foreign('penjualan_id')->references('id')->on('penjualans')->onDelete('casecade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('casecade');
+            $table->foreign('penjualan_id')->references('id')->on('penjualans')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

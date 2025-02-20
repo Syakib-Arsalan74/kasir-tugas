@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Penjualan;
 use App\Http\Requests\StorePenjualanRequest;
 use App\Http\Requests\UpdatePenjualanRequest;
+use Symfony\Component\HttpFoundation\Request;
 
 class PenjualanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return view('penjualan');
     }
 
     /**
