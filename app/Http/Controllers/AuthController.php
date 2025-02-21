@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
    function viewLogin (){
-        return view('login');
+        return view('auth.login');
    }
 
    function login (Request $request){
@@ -26,11 +27,16 @@ class AuthController extends Controller
    }
 
    function viewRegister (){
-        return view('register');
+        return view('auth.register');
    }
 
    function register (Request $request){
-
+        $user = new User();
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return redirect()->route('login');
    }
 
    function logout (Request $request){
