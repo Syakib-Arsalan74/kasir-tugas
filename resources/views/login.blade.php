@@ -43,7 +43,11 @@
                         in</button>
                 </div>
             </form>
-
+            @if (session('wrong'))
+            <p class="mt-10 text-center text-sm/6 text-red-600">
+                {{ session('wrong') }}
+            </p>
+            @endif
             <p class="mt-10 text-center text-sm/6 text-gray-500">
                 No Have Account?
                 <a href="/register" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign Up</a>

@@ -14,7 +14,7 @@ class AuthController extends Controller
    function login (Request $request){
         $data = $request->validate([
             'email' => 'required|email:dns',
-            'password' => 'confirm|password'
+            'password' => 'required'
         ]);
 
         if(Auth::attempt($data)){
