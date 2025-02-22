@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
+use Illuminate\Http\Request;
 use App\Http\Requests\StorePelangganRequest;
 use App\Http\Requests\UpdatePelangganRequest;
 
@@ -13,15 +14,21 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        //
+        return view('kasirPanel.pelanggan');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'noTelp' => 'required',
+        ]);
+        Pelanggan::create($data);
+        return redirect()->route('pelanggan')->with('status', 'Data Pelanggan Berhasil Ditambahkan');
     }
 
     /**

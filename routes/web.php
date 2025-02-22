@@ -1,15 +1,19 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\PanelController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\PenjualanController;
 
 
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
-route::get('/dashboard', [PanelController::class, 'viewDashboard'])->name('dashboard')->middleware('auth');
+route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
 Route::get('/login', [AuthController::class, 'viewLogin'])->name('login')->middleware('guest');
 Route::post('/login/submit', [AuthController::class, 'login'])->name('submit.login')->middleware('guest');
@@ -23,7 +27,14 @@ Route::get('/register', [AuthController::class, 'viewRegister'])->name('register
 Route::post('/register/submit', [AuthController::class, 'register'])->name('submit.register')->middleware('guest');
 
 
-Route::get('/penjualan', [PanelController::class, 'viewPenjualan'])->name('penjualan')->middleware('auth');
-Route::get('/pengguna', [PanelController::class, 'viewPengguna'])->name('pengguna')->middleware('auth');
-Route::get('/pelanggan', [PanelController::class, 'viewPelanggan'])->name('pelanggan')->middleware('auth');
-Route::get('/product', [PanelController::class, 'viewProduct'])->name('product')->middleware('auth');
+Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan')->middleware('auth');
+
+Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna')->middleware('auth');
+Route::get('/pengguna/tambah', [PenggunaController::class, 'tambahPengguna'])->name('tambah.pengguna')->middleware('auth');
+
+Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan')->middleware('auth');
+Route::get('/pelanggan/tambah', [PelangganController::class, 'formPelanggan'])->name('tambah.pelanggan')->middleware('auth');
+Route::post('/pelanggan/submit', [PelangganController::class, 'tambahPelanggan'])->name('submit.pelanggan')->middleware('auth');
+
+Route::get('/product', [ProductController::class, 'index'])->name('product')->middleware('auth');
+Route::get('/product/tambah', [ProductController::class, 'tambahProduct'])->name('tambah.product')->middleware('auth');
