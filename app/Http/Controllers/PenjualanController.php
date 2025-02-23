@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pelanggan;
 use App\Models\Penjualan;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePenjualanRequest;
 use App\Http\Requests\UpdatePenjualanRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +16,7 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        return view('kasirPanel.penjualan');
+        return view('kasirPanel.penjualan', ['penjualan' => Penjualan::all(), 'pelanggans' => Pelanggan::all(), 'user' => Auth::user()->username]);
     }
 
     /**
@@ -44,7 +46,7 @@ class PenjualanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Penjualan $penjualan)
+    public function editPenjualan(Penjualan $penjualan)
     {
         //
     }
@@ -52,7 +54,7 @@ class PenjualanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePenjualanRequest $request, Penjualan $penjualan)
+    public function updatePenjualan(UpdatePenjualanRequest $request, Penjualan $penjualan)
     {
         //
     }
@@ -60,8 +62,9 @@ class PenjualanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Penjualan $penjualan)
+    public function destroyPenjualan(Penjualan $penjualan)
     {
-        //
+        $penjualan->delete();
+        return redirect()->route('penjualan')->with('success', 'Penjualan berhasil dihapus');
     }
 }

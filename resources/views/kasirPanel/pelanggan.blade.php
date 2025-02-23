@@ -50,7 +50,7 @@
                 </button>
             </div>
             <div class="mt-4">
-                <table class="table-auto w-full">
+                <table class="table-auto w-full text-xs sm:text-base text-center">
                     <thead>
                         <tr>
                             <th class="border-2 border-gray-200 p-2">No</th>
@@ -82,7 +82,7 @@
                                         <form action="{{ route('hapus.pelanggan', $pelanggan->id) }}" method="post">
                                             @method('delete')
                                             @csrf
-                                            <button onclick="confirm('are you sure')" type="submit"
+                                            <button onclick="return confirm('are you sure')" type="submit"
                                                 {{-- data-modal-target="popup-modal" data-modal-toggle="popup-modal" --}} id="delete-button"
                                                 class="bg-red-500 hover:bg-red-600 text-white px-1 py-1 rounded-md">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"

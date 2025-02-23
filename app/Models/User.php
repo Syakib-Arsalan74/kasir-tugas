@@ -21,9 +21,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -52,8 +53,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    
-    function penjualan () : HasMany {
+
+    function penjualan(): HasMany
+    {
         return $this->hasMany(Penjualan::class, 'user_id');
     }
 }

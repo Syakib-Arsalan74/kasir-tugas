@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends Controller
 {
@@ -14,15 +14,34 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('kasirPanel.product');
+        return view('kasirPanel.product', ['products' => Product::all()]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function createProduk(Request $request)
     {
-        //
+        // Validasi
+        $data = $request->validate([
+            'namaProduk' => 'required|string|max:255',
+            'harga' => 'required|numeric|min:0',
+            'stok' => 'required|integer|min:0',
+            'gambarProduk' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $fileName = time() . '_' . $request->gambarProduk->getClientOriginalName();
+
+        $path = $request->file('gambarProduk')->storeAs('imgs', $fileName);
+
+        $product = new Product();
+        $product->gambarProduk = $path;
+        $product->harga = $data['harga'];
+        $product->stok = $data['stok'];
+        $product->namaProduk = $data['namaProduk'];
+        $product->save();
+
+        return redirect()->route('product')->with('success', 'Produk berhasil ditambahkan');
     }
 
     /**
@@ -60,8 +79,9 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroyProduk(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('product')->with('success', 'Produk berhasil dihapus');
     }
 }

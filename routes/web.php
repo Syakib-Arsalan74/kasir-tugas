@@ -30,7 +30,8 @@ Route::post('/register/submit', [AuthController::class, 'register'])->name('subm
 Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan')->middleware('auth');
 
 Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna')->middleware('auth');
-Route::get('/pengguna/tambah', [PenggunaController::class, 'tambahPengguna'])->name('tambah.pengguna')->middleware('auth');
+Route::post('/pengguna', [PenggunaController::class, 'createPengguna'])->name('tambah.pengguna')->middleware('auth');
+Route::delete('/pengguna/{pengguna}', [PenggunaController::class, 'destroyPengguna'])->name('hapus.pengguna')->middleware('auth');
 
 Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan')->middleware('auth');
 Route::post('/pelanggan', [PelangganController::class, 'createPelanggan'])->name('tambah.pelanggan')->middleware('auth');
@@ -39,4 +40,5 @@ Route::get('/pelanggan/{$id}', [PelangganController::class, 'updatePelanggan'])-
 Route::delete('/pelanggan/{pelanggan}', [PelangganController::class, 'destroyPelanggan'])->name('hapus.pelanggan')->middleware('auth');
 
 Route::get('/product', [ProductController::class, 'index'])->name('product')->middleware('auth');
-Route::get('/product/tambah', [ProductController::class, 'tambahProduct'])->name('tambah.product')->middleware('auth');
+Route::post('/product', [ProductController::class, 'createProduk'])->name('tambah.product')->middleware('auth');
+route::delete('/product/{product}', [ProductController::class, 'destroyProduk'])->name('hapus.product')->middleware('auth');

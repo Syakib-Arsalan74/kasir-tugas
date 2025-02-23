@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('penjualans', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggalPenjualan');
-            $table->decimal('totalHarga');
+            $table->decimal('totalHarga', 10, 2);
             $table->unsignedBigInteger('pelanggan_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

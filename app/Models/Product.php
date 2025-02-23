@@ -16,13 +16,15 @@ class Product extends Model
         'namaProduck',
         'harga',
         'stok',
+        'gambarProduk',
     ];
 
     protected $with = [
         'detailPenjualan'
     ];
 
-    function detailPenjualan () : HasMany {
+    function detailPenjualan(): HasMany
+    {
         return $this->hasMany(DetailPenjualan::class, 'Product_id');
     }
 }

@@ -50,7 +50,7 @@ class PelangganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pelanggan $pelanggan)
+    public function editPelanggan(Pelanggan $pelanggan)
     {
         //
     }
