@@ -14,18 +14,18 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        return view('kasirPanel.pelanggan');
+        return view('kasirPanel.pelanggan', ['pelanggans' => Pelanggan::all()]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function createPelanggan(Request $request)
     {
         $data = $request->validate([
-            'nama' => 'required',
-            'alamat' => 'required',
-            'noTelp' => 'required',
+            'namaPelanggan' => 'required|max:255',
+            'alamat' => 'required|max:255',
+            'noTelp' => 'required|max:15',
         ]);
         Pelanggan::create($data);
         return redirect()->route('pelanggan')->with('status', 'Data Pelanggan Berhasil Ditambahkan');
@@ -58,7 +58,7 @@ class PelangganController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePelangganRequest $request, Pelanggan $pelanggan)
+    public function updatePelanggan(UpdatePelangganRequest $request, Pelanggan $pelanggan)
     {
         //
     }
@@ -66,8 +66,9 @@ class PelangganController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pelanggan $pelanggan)
+    public function destroyPelanggan(Pelanggan $pelanggan)
     {
-        //
+        $pelanggan->delete();
+        return redirect()->route('pelanggan')->with('status', 'Data Pelanggan Berhasil Dihapus');
     }
 }
