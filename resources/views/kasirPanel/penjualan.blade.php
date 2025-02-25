@@ -32,9 +32,15 @@
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-semibold text-gray-900">Penjualan</h1>
                 <div class="flex items-center">
-                    <a data-modal-target="add-modal" data-modal-toggle="add-modal"
-                        class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 sm:px-4 sm:py-2 text-xs sm:text-base hover:cursor-pointer rounded-md">New
-                        transaksi</a>
+                    <a
+                        class="bg-green-500 hover:bg-green-600 text-white p-1 sm:p-2 text-xs sm:text-base hover:cursor-pointer rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-Width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-Linecap="round" stroke-Linejoin="round"
+                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                        <span class="sr-only">Download Pdf</span>
+                    </a>
                 </div>
             </div>
             <div class="flex justify-between">
@@ -50,13 +56,77 @@
                         <span class="sr-only">Search</span>
                     </button>
                 </div>
-                <form class="flex items-center mt-4 ">
+                <form class="flex items-center mt-4">
                     <select id="filter"
                         class="text-xs bg-gray-50 border border-gray-300 text-gray-900 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ml-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected>All</option>
                         <option value="Admin">Newest</option>
                         <option value="Kasir">Oldest</option>
                     </select>
+                </form>
+            </div>
+            <div class="mt-4">
+                <form action="" method="post" class="grid gap-4 sm:grid-cols-6">
+                    <div>
+                        <label for="pelanggan"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Pelangan
+                            :</label>
+                        <select id="pelanggan" name="pelanggan_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            @foreach ($pelanggans as $pelanggan)
+                                <option value="{{ $pelanggan->id }}">{{ $pelanggan->namaPelanggan }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-start-6">
+                        <label for="kasir" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kasir
+                            Saat ini
+                            :</label>
+                        <input type="username" name="user_id" id="kasir"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            value="{{ $user }}" readonly>
+                    </div>
+                    <div>
+                        <label for="barang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
+                            Produk :</label>
+                        <select id="barang" name="product_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            @foreach ($produks as $produk)
+                                <option value="{{ $produk->id }}">{{ $produk->namaProduk }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label for="stokBarang"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stok Saat
+                            ini</label>
+                        <input type="text" name="stok" id="stokBarang"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            value="" readonly>
+                    </div>
+                    <div>
+                        <label for="hargaBarang"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga
+                            Satuan</label>
+                        <input type="text" name="harga" id="hargaBarang"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            value="" readonly>
+                    </div>
+                    <div>
+                        <label for="totalJual"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Jual</label>
+                        <input type="text" name="totalJu" id="totalJual"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                    </div>
+                    <div class="col-start-5 col-span-2 row-span-2">
+                        <label for="total"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your message</label>
+                        <textarea id="total" rows="4"
+                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            value=""></textarea>
+                    </div>
                 </form>
             </div>
             <div class="mt-4">

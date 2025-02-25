@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Pelanggan;
 use App\Models\Penjualan;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        return view('kasirPanel.penjualan', ['penjualan' => Penjualan::all(), 'pelanggans' => Pelanggan::all(), 'user' => Auth::user()->username]);
+        return view('kasirPanel.penjualan', ['penjualan' => Penjualan::all(), 'pelanggans' => Pelanggan::all(), 'user' => Auth::user()->username, 'produks' => Product::all()]);
     }
 
     /**
