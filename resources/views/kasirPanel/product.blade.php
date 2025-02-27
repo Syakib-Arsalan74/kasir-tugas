@@ -37,18 +37,20 @@
                         Data</a>
                 </div>
             </div>
-            <div class="flex items-center mt-4">
-                <input type="text" class="text-xs border-1 border-gray-200 rounded-md sm:p-2"
-                    placeholder="Cari Produk">
-                <button class="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-md ml-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-Linecap="round" stroke-Linejoin="round"
-                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                    </svg>
-                    <span class="sr-only">Search</span>
-                </button>
-            </div>
+            <form>
+                <div class="flex items-center mt-4">
+                    <input type="text" class="text-xs border-1 border-gray-200 rounded-md sm:p-2"
+                        placeholder="Cari Produk" name="search">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-md ml-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-Linecap="round" stroke-Linejoin="round"
+                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                        <span class="sr-only">Search</span>
+                    </button>
+                </div>
+            </form>
             <div class="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 @foreach ($products as $product)
                     <div

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\DetailPenjualan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -25,6 +26,11 @@ class Product extends Model
 
     function detailPenjualan(): HasMany
     {
-        return $this->hasMany(DetailPenjualan::class, 'Product_id');
+        return $this->hasMany(DetailPenjualan::class);
+    }
+
+    function scopeSearch(Builder $query): void
+    {
+        $query->where('namaProduk', 'like', '%' . request('search') . '%');
     }
 }

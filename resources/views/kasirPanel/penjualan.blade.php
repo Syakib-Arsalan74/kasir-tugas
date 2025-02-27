@@ -66,7 +66,7 @@
                 </form>
             </div>
             <div class="mt-4">
-                <form action="" method="post" class="grid gap-4 sm:grid-cols-6">
+                <form action="" method="post" class="grid gap-3 sm:grid-cols-6">
                     <div>
                         <label for="pelanggan"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Pelangan
@@ -87,45 +87,117 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             value="{{ $user }}" readonly>
                     </div>
-                    <div>
-                        <label for="barang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
-                            Produk :</label>
-                        <select id="barang" name="product_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            @foreach ($produks as $produk)
-                                <option value="{{ $produk->id }}">{{ $produk->namaProduk }}
-                                </option>
-                            @endforeach
-                        </select>
+                    <div class="col-span-4 row-span-6 mt-2 ">
+                        <h1 class="text-xl font-bold mb-4">Pembelian :</h1>
+                        <div
+                            class="p-4 border-2 border-gray-200 rounded-md dark:border-gray-700 overflow-x-auto text-xs sm:text-base">
+                            <div class="grid grid-cols-3">
+                                <div class="mb-2">
+                                    <label for="produk"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Masukan
+                                        Produk
+                                        :</label>
+                                    <select id="produk" name="produk"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        @foreach ($produks as $produk)
+                                            <option value="{{ $produk->id }}">{{ $produk->namaProduk }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-center">
+                                <thead class="bg-gray-50 dark:bg-gray-800">
+                                    <tr>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            No
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Produk
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Harga
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Quantity
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            stok
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Aksi
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($produks as $item)
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {{ $loop->iteration }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {{ $item->namaProduk }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                Rp. {{ number_format($item->harga, 0, ',', '.') }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {{ $item->quantity }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {{ $item->stok }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button type="button" id="batalkanPenjualan"
+                                                    class="text-blue-600 hover:text-blue-900">Delete</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div>
-                        <label for="stokBarang"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stok Saat
-                            ini</label>
-                        <input type="text" name="stok" id="stokBarang"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            value="" readonly>
-                    </div>
-                    <div>
-                        <label for="hargaBarang"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga
-                            Satuan</label>
-                        <input type="text" name="harga" id="hargaBarang"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            value="" readonly>
-                    </div>
-                    <div>
-                        <label for="totalJual"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Jual</label>
-                        <input type="text" name="totalJu" id="totalJual"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    </div>
-                    <div class="col-start-5 col-span-2 row-span-2">
-                        <label for="total"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your message</label>
-                        <textarea id="total" rows="4"
-                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            value=""></textarea>
+                    <div class="col-span-2 row-span-6 mt-2">
+                        <h1 class="text-xl font-bold mb-4">Pembayaran :</h1>
+                        <div
+                            class="p-2 border-2 border-gray-200 rounded-md dark:border-gray-700 overflow-x-auto text-xs sm:text-base">
+                            <p class="m-1">Total Biaya :</p>
+                            <div
+                                class="flex justify-between p-2 border-1 border-gray-200 rounded-sm dark:border-gray-700 overflow-x-auto text-xs sm:text-base">
+                                <p>Rp</p>
+                                <p>1.000,00</p>
+                            </div>
+                            <p class="m-1">Bayar :</p>
+                            <div class="mt-2">
+                                <input type="number"
+                                    class="w-full h-full text-xs border-1 border-gray-200 rounded-sm sm:p-3"
+                                    placeholder="Uang Pembayaran">
+                            </div>
+                            <p class="m-1">Total Kembalian :</p>
+                            <div
+                                class="flex justify-between p-2 mt-2 border-1 border-gray-200 rounded-sm dark:border-gray-700 overflow-x-auto text-xs sm:text-base">
+                                <p>Rp</p>
+                                <p>1.000,00</p>
+                            </div>
+                            <div class="my-2">
+                                <button type="submit"
+                                    class="text-white w-full h-full inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    Add new Transaksi
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -188,65 +260,3 @@
         </div>
     </div>
 </x-layout>
-
-<!-- Main modal -->
-<div id="add-modal" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-            <!-- Modal header -->
-            <div
-                class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                    Create New Data Penjualan
-                </h3>
-                <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-toggle="add-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <form action="" method="post" class="p-4 md:p-5">
-                @csrf
-                <div class="grid gap-4 mb-4 grid-cols-2">
-                    <div class="col-span-2">
-                        <label for="pelanggan"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
-                            Pelanggan</label>
-                        <select id="pelanggan" name="pelanggan_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            @foreach ($pelanggans as $pelanggan)
-                                <option value="{{ $pelanggan->id }}">{{ $pelanggan->namaPelanggan }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-span-2">
-                        <label for="kasir"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kasir</label>
-                        <input type="username" name="user_id" id="kasir"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            value="{{ $user }}" readonly>
-                    </div>
-                </div>
-                <button type="submit"
-                    class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    Add new Transaksi
-                </button>
-            </form>
-        </div>
-    </div>
-</div>

@@ -17,8 +17,35 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
     <script>
+        const pelangganAlert = document.getElementById("alert-pelanggan");
+        const btnPelangganAlert = document.getElementById("btn-alert-pelanggan");
+        btnPelangganAlert.addEventListener("click", function() {
+            pelangganAlert.classList.add("hidden");
+        });
+
+        const btnEdit = document.getElementById('edit-pengguna');
+        btnEdit.addEventListener('click', function() {
+            console.log('tombol ok');
+        });
+        // $('#edit-pengguna').on('click', function(e) {
+        //     alert('tombol ok');
+        // });
+        // const deleteButton = document.getElementById("delete-button");
+        // const confirmDeleteButton = document.getElementById("btn-confirm-delete");
+        // let form = null;
+
+        // deleteButton.addEventListener("click", function (event) {
+        //     event.preventDefault();
+        //     form.deleteButton.closest("form");
+        // });
+        // confirmDeleteButton.addEventListener("click", function () {
+        //     if (form) {
+        //         form.submit();
+        //     }
+        // });
+
+
         const labels = ["January", "February", "March", "April", "May", "June"];
         const data = {
             labels: labels,

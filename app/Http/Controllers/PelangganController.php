@@ -14,7 +14,7 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        return view('kasirPanel.pelanggan', ['pelanggans' => Pelanggan::all()]);
+        return view('kasirPanel.pelanggan', ['pelanggans' => Pelanggan::search()->latest()->get()]);
     }
 
     /**

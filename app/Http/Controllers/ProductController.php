@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('kasirPanel.product', ['products' => Product::all()]);
+        return view('kasirPanel.product', ['products' => Product::search()->latest()->get()]);
     }
 
     /**

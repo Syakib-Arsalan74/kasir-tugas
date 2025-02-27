@@ -22,7 +22,6 @@ Route::get('/forgot-password', [AuthController::class, 'viewForgotPassword'])->n
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->middleware('guest')->name('password.email');
 Route::get('/reset-password/{token}', [AuthController::class, 'viewResetPassword'])->name('password.reset')->middleware('guest');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update')->middleware('guest');
-
 Route::get('/register', [AuthController::class, 'viewRegister'])->name('register')->middleware('guest');
 Route::post('/register/submit', [AuthController::class, 'register'])->name('submit.register')->middleware('guest');
 
@@ -31,14 +30,18 @@ Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan
 
 Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna')->middleware('auth');
 Route::post('/pengguna', [PenggunaController::class, 'createPengguna'])->name('tambah.pengguna')->middleware('auth');
+Route::get('/pengguna/{$id}/edit', [PenggunaController::class, 'editPengguna'])->name('edit.pengguna')->middleware('auth');
+Route::post('/pengguna/{$id}', [PenggunaController::class, 'updatePengguna'])->name('update.pengguna')->middleware('auth');
 Route::delete('/pengguna/{pengguna}', [PenggunaController::class, 'destroyPengguna'])->name('hapus.pengguna')->middleware('auth');
 
 Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan')->middleware('auth');
 Route::post('/pelanggan', [PelangganController::class, 'createPelanggan'])->name('tambah.pelanggan')->middleware('auth');
 Route::get('/pelanggan/{$id}/edit', [PelangganController::class, 'editPelanggan'])->name('edit.pelanggan')->middleware('auth');
-Route::get('/pelanggan/{$id}', [PelangganController::class, 'updatePelanggan'])->name('update.pelanggan')->middleware('auth');
+Route::post('/pelanggan/{$id}', [PelangganController::class, 'updatePelanggan'])->name('update.pelanggan')->middleware('auth');
 Route::delete('/pelanggan/{pelanggan}', [PelangganController::class, 'destroyPelanggan'])->name('hapus.pelanggan')->middleware('auth');
 
 Route::get('/product', [ProductController::class, 'index'])->name('product')->middleware('auth');
 Route::post('/product', [ProductController::class, 'createProduk'])->name('tambah.product')->middleware('auth');
+Route::get('/product/{$id}/edit', [ProductController::class, 'editProduk'])->name('edit.product')->middleware('auth');
+Route::post('/product/{$id}', [ProductController::class, 'updateProduk'])->name('update.product')->middleware('auth');
 route::delete('/product/{product}', [ProductController::class, 'destroyProduk'])->name('hapus.product')->middleware('auth');

@@ -9,7 +9,7 @@ class PenggunaController extends Controller
 {
     function index()
     {
-        return view('kasirPanel.pengguna', ['users' => User::all(), 'roles' => ['kasir', 'admin']]);
+        return view('kasirPanel.pengguna', ['users' => User::search(request(['search', 'role']))->latest()->get(), 'roles' => ['kasir', 'admin']]);
     }
 
     public function createPengguna(Request $request)

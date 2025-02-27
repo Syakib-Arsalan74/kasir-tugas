@@ -16,7 +16,7 @@ class DetailPenjualan extends Model
     protected $fillable = [
         'penjualan_id',
         'product_id',
-        'jumlahProduct',
+        'jumlah',
         'subtotal',
     ];
     protected $with = [
@@ -24,11 +24,13 @@ class DetailPenjualan extends Model
         'penjualan'
     ];
 
-    function product () : BelongsTo {
+    function product(): BelongsTo
+    {
         return $this->belongsTo(Product::class);
     }
 
-    function penjualan () : BelongsTo {
+    function penjualan(): BelongsTo
+    {
         return $this->belongsTo(Penjualan::class);
     }
 }

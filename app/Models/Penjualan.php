@@ -27,15 +27,18 @@ class Penjualan extends Model
         'user'
     ];
 
-    function detailPenjualan () : HasOne {
-        return $this->hasOne(DetailPenjualan::class);
+    function detailPenjualan(): HasMany
+    {
+        return $this->hasMany(DetailPenjualan::class);
     }
 
-    function pelanggan () : BelongsTo {
+    function pelanggan(): BelongsTo
+    {
         return $this->belongsTo(Pelanggan::class);
     }
 
-    function user () : BelongsTo {
+    function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 }
