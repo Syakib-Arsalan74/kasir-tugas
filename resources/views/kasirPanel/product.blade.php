@@ -79,7 +79,6 @@
                                         @method('delete')
                                         @csrf
                                         <button onclick="return confirm('are you sure')" type="submit"
-                                            {{-- data-modal-target="popup-modal" data-modal-toggle="popup-modal" --}} id="delete-button"
                                             class="bg-red-500 hover:bg-red-600 text-white px-1 py-1 rounded-md">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 strokeWidth="1.5" stroke="currentColor" class="size-6">

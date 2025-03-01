@@ -50,17 +50,26 @@ class PelangganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function editPelanggan(Pelanggan $pelanggan)
+    public function editPelanggan($id)
     {
-        //
+        $data = Pelanggan::where('id', $id)->first();
+        return response()->json(['result' => $data]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function updatePelanggan(UpdatePelangganRequest $request, Pelanggan $pelanggan)
+    public function updatePelanggan(Request $request, $id)
     {
-        //
+        dd($id);
+        $data = Pelanggan::where('id', $id)->first();
+        $validateData = $request->validate([
+            'namaPelanggan' => 'required|max:255',
+            'alamat' => 'required|max:255',
+            'noTelp' => 'required|max:15',
+        ]);
+        $data->update($validateData);
+        return redirect()->route('pelanggan')->with('status', 'Data Pelanggan Berhasil Diedit');
     }
 
     /**

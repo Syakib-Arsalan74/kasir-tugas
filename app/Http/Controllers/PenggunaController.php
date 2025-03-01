@@ -29,6 +29,6 @@ class PenggunaController extends Controller
     function destroyPengguna(User $pengguna)
     {
         $pengguna->delete();
-        return redirect()->route('pengguna');
+        return redirect()->route('pengguna')->with('status', 'Data Pengguna Berhasil Dihapus');
     }
 }

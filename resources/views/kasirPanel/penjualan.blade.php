@@ -67,6 +67,7 @@
             </div>
             <div class="mt-4">
                 <form action="" method="post" class="grid gap-3 sm:grid-cols-6">
+                    @csrf
                     <div>
                         <label for="pelanggan"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Pelangan
@@ -91,19 +92,23 @@
                         <h1 class="text-xl font-bold mb-4">Pembelian :</h1>
                         <div
                             class="p-4 border-2 border-gray-200 rounded-md dark:border-gray-700 overflow-x-auto text-xs sm:text-base">
+                            <label for="produk" class="block mb-2 text-sm font-medium text-gray-900">Masukan
+                                Produk :</label>
                             <div class="grid grid-cols-3">
                                 <div class="mb-2">
-                                    <label for="produk"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Masukan
-                                        Produk
-                                        :</label>
-                                    <select id="produk" name="produk"
+                                    <select id="pilihProduk" name="produk"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         @foreach ($produks as $produk)
-                                            <option value="{{ $produk->id }}">{{ $produk->namaProduk }}
-                                            </option>
+                                            <option value="{{ $produk->id }}" data-harga="{{ $produk->harga }}"
+                                                data-stok="{{ $produk->stok }}">
+                                                {{ $produk->namaProduk }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="mb-2 col-start-4">
+                                    <button type="button" id="tambahProduk"
+                                        class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">Tambah
+                                        Produk</button>
                                 </div>
                             </div>
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-center">
@@ -135,30 +140,8 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($produks as $item)
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $loop->iteration }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $item->namaProduk }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                Rp. {{ number_format($item->harga, 0, ',', '.') }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $item->quantity }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $item->stok }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <button type="button" id="batalkanPenjualan"
-                                                    class="text-blue-600 hover:text-blue-900">Delete</button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                <tbody id="produkList">
+                                    {{-- diisi otomatis --}}
                                 </tbody>
                             </table>
                         </div>
@@ -167,15 +150,15 @@
                         <h1 class="text-xl font-bold mb-4">Pembayaran :</h1>
                         <div
                             class="p-2 border-2 border-gray-200 rounded-md dark:border-gray-700 overflow-x-auto text-xs sm:text-base">
-                            <p class="m-1">Total Biaya :</p>
-                            <div
-                                class="flex justify-between p-2 border-1 border-gray-200 rounded-sm dark:border-gray-700 overflow-x-auto text-xs sm:text-base">
-                                <p>Rp</p>
-                                <p>1.000,00</p>
+                            <div>
+                                <p class="m-1">Total Biaya :</p>
+                                <input type="text" id="total-biaya" name="totalHarga"
+                                    class="w-full h-full text-xs border-1 border-gray-200 rounded-sm sm:p-3"
+                                    value="" readonly>
                             </div>
                             <p class="m-1">Bayar :</p>
                             <div class="mt-2">
-                                <input type="number"
+                                <input type="number" id="input-bayar"
                                     class="w-full h-full text-xs border-1 border-gray-200 rounded-sm sm:p-3"
                                     placeholder="Uang Pembayaran">
                             </div>
@@ -183,7 +166,7 @@
                             <div
                                 class="flex justify-between p-2 mt-2 border-1 border-gray-200 rounded-sm dark:border-gray-700 overflow-x-auto text-xs sm:text-base">
                                 <p>Rp</p>
-                                <p>1.000,00</p>
+                                <p id="total-kembalian"></p>
                             </div>
                             <div class="my-2">
                                 <button type="submit"
@@ -259,4 +242,112 @@
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var totalBiaya = parseFloat($('#total-biaya').val());
+
+            function calculateKembalian() {
+                var bayar = parseFloat($('#input-bayar').val().replace('.', '').replace(',', '.'));
+                var kembalian = 0;
+                if (!isNaN(bayar)) {
+                    kembalian = bayar - totalBiaya;
+                }
+                $('#total-kembalian').text(kembalian >= 0 ? kembalian.toFixed(2).replace('.', ',') : '0,00');
+            }
+            $('#input-bayar').on('input', function() {
+                setTimeout(calculateKembalian, 0);
+            });
+            $('#input-bayar').on('keypress', function(event) {
+                if (event.which === 13) {
+                    event.preventDefault();
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            var totalBiaya = 0;
+
+            // Fungsi untuk menambah produk ke tabel
+            $('#tambahProduk').on('click', function() {
+                var selectedOption = $('#pilihProduk option:selected');
+                var produkId = selectedOption.val();
+                var produkNama = selectedOption.text();
+                var produkHarga = parseFloat(selectedOption.data('harga'));
+                var produkStok = parseInt(selectedOption.data('stok'));
+                var quantity = 1; // Default quantity
+
+                // Cek apakah produk sudah ada di tabel
+                var existingRow = $('#produkList tr[data-id="' + produkId + '"]');
+                if (existingRow.length > 0) {
+                    // Jika produk sudah ada, tambahkan quantity
+                    var existingQuantity = parseInt(existingRow.find('.quantity').text());
+                    existingRow.find('.quantity').text(existingQuantity + 1);
+
+                    // Update total harga untuk produk yang ditambahkan
+                    var newTotalHarga = produkHarga * (existingQuantity + 1);
+                    existingRow.find('.total-harga').text('Rp. ' + newTotalHarga.toLocaleString('id-ID'));
+
+                    // Update total biaya
+                    totalBiaya += produkHarga; // Tambah harga produk
+                } else {
+                    // Hitung total harga untuk produk yang ditambahkan
+                    var totalHarga = produkHarga * quantity;
+
+                    // Tambahkan produk ke tabel
+                    $('#produkList').append(`
+                <tr data-id="${produkId}">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${$('#produkList tr').length + 1}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${produkNama}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp. ${produkHarga.toLocaleString('id-ID')}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 quantity">${quantity}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${produkStok}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button type="button" class="text-red-600 hover:text-red-900" onclick="removeProduct(this)">Delete</button>
+                    </td>
+                </tr>
+            `);
+
+                    // Update total biaya
+                    totalBiaya += totalHarga; // Tambah total harga produk
+                }
+
+                // Update total biaya di input
+                $('#total-biaya').val(totalBiaya.toLocaleString('id-ID'));
+            });
+
+            // Fungsi untuk menghitung kembalian
+            function calculateKembalian() {
+                var bayar = parseFloat($('#input-bayar').val().replace('.', '').replace(',', '.'));
+                var kembalian = 0;
+
+                // Hitung kembalian jika bayar valid
+                if (!isNaN(bayar)) {
+                    kembalian = bayar - totalBiaya; // Ganti totalBiaya dengan totalBiaya yang benar
+                }
+
+                // Tampilkan kembalian
+                $('#total-kembalian').text(kembalian >= 0 ? kembalian.toFixed(2).replace('.', ',') : '0,00');
+            }
+
+            // Event listener untuk input bayar
+            $('#input-bayar').on('input', function() {
+                setTimeout(calculateKembalian, 0); // Menjalankan fungsi secara asynchronous
+            });
+
+            // Fungsi untuk menghapus produk dari tabel
+            window.removeProduct = function(button) {
+                var row = $(button).closest('tr');
+                var quantity = parseInt(row.find('.quantity').text());
+                var hargaPerUnit = parseFloat(row.find('td:nth-child(3)').text().replace('Rp. ', '').replace(
+                    '.', '').replace(',', '.')); // Ambil harga per unit
+                var totalHarga = hargaPerUnit * quantity; // Hitung total harga untuk quantity yang ada
+
+                totalBiaya -= totalHarga; // Kurangi total biaya
+                $('#total-biaya').val(totalBiaya.toLocaleString('id-ID')); // Update total biaya
+                row.remove(); // Hapus baris dari tabel
+            };
+        });
+    </script>
 </x-layout>

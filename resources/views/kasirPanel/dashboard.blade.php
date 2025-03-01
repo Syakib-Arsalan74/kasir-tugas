@@ -37,10 +37,10 @@
                         </div>
                         <div>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                Account balance
+                                Total Pembayaran
                             </p>
                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                $ 46,760.89
+                                {{ }}
                             </p>
                         </div>
                     </div>
@@ -77,9 +77,11 @@
                         </div>
                         <div>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                Pending contacts
+                                Total transaksi
                             </p>
-                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">35</p>
+                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                                {{ }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -94,8 +96,57 @@
                     <canvas class="p-10" id="chartBar"></canvas>
                 </div>
             </div>
-
-
         </div>
     </div>
+    <script>
+        const labels = ["January", "February", "March", "April", "May", "June"];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: "My First dataset",
+                backgroundColor: "hsl(252, 82.9%, 67.8%)",
+                borderColor: "hsl(252, 82.9%, 67.8%)",
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }, ],
+        };
+
+        const configLineChart = {
+            type: "line",
+            data,
+            options: {},
+        };
+
+        var chartLine = new Chart(
+            document.getElementById("chartLine"),
+            configLineChart
+        );
+        const labelsBarChart = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+        ];
+        const dataBarChart = {
+            labels: labelsBarChart,
+            datasets: [{
+                label: "My First dataset",
+                backgroundColor: "hsl(252, 82.9%, 67.8%)",
+                borderColor: "hsl(252, 82.9%, 67.8%)",
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }, ],
+        };
+
+        const configBarChart = {
+            type: "bar",
+            data: dataBarChart,
+            options: {},
+        };
+
+        var chartBar = new Chart(
+            document.getElementById("chartBar"),
+            configBarChart
+        );
+    </script>
 </x-layout>
