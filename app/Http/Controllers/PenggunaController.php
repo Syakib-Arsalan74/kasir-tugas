@@ -11,7 +11,7 @@ class PenggunaController extends Controller
     use AuthorizesRequests;
     function index()
     {
-        $this->authorize('aksesPengguna', User::class);
+        // $this->authorize('aksesPengguna', User::class);
         return view('kasirPanel.pengguna', ['users' => User::search(request(['search', 'role']))->latest()->get(), 'roles' => ['kasir', 'admin']]);
     }
 
@@ -27,6 +27,25 @@ class PenggunaController extends Controller
         User::create($data);
 
         return redirect()->route('pengguna');
+    }
+
+    public function editPengguna(User $pengguna)
+    {
+        $pengguna = User::where('id', $pengguna->id)->first();
+        return view('kasirPanel.editPengguna', ['pengguna' => $pengguna, 'roles' => ['kasir', 'admin']]);
+    }
+
+    public function updatePengguna(Request $request, $id)
+    {
+        $data = User::where('id', $id)->firstOrFail();
+        $validateData = $request->validate([
+            'username' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'role' => 'required|in:kasir,admin'
+        ]);
+        $data->update($validateData);
+        return redirect()->route('pengguna')->with('status', 'Data Pengguna Berhasil Diedit');
     }
 
     function destroyPengguna(User $pengguna)

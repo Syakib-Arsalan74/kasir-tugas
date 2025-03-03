@@ -45,7 +45,7 @@ class PelangganController extends Controller
     public function editPelanggan(Pelanggan $pelanggan)
     {
         $pelanggan = Pelanggan::where('id', $pelanggan->id)->first();
-        return view('kasirPanel.editPelanggan', ['pelanggan' => $pelanggan] );
+        return view('kasirPanel.editPelanggan', ['pelanggan' => $pelanggan]);
     }
 
     /**
@@ -57,7 +57,7 @@ class PelangganController extends Controller
      */
     public function updatePelanggan(Request $request, $id)
     {
-        $data = Pelanggan::where('id', $id)->first();
+        $data = Pelanggan::where('id', $id)->firstOrFail();
         $validateData = $request->validate([
             'namaPelanggan' => 'required|max:255',
             'alamat' => 'required|max:255',

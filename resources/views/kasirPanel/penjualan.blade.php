@@ -35,8 +35,8 @@
                     <div class="flex items-center m-1">
                         <a
                             class="bg-green-500 hover:bg-green-600 text-white p-1 sm:p-2 text-xs sm:text-base hover:cursor-pointer rounded-md">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-Width="1.5"
-                                stroke="currentColor" class="size-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-Width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-Linecap="round" stroke-Linejoin="round"
                                     d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                             </svg>
@@ -46,8 +46,8 @@
                     <div class="flex items-center m-1">
                         <a
                             class="bg-red-500 hover:bg-red-600 text-white p-1 sm:p-2 text-xs sm:text-base hover:cursor-pointer rounded-md">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-Width="1.5"
-                                stroke="currentColor" class="size-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-Width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-Linecap="round" stroke-Linejoin="round"
                                     d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                             </svg>
@@ -97,17 +97,10 @@
                         <label for="kasir" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kasir
                             Saat ini
                             :</label>
-<<<<<<< HEAD
                         <input type="username"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             value="{{ $user->username }}" readonly>
                         <input type="hidden" name="user_id" id="kasir"
-=======
-                        <input type="username" id="kasir"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            value="{{ $user->username }}" readonly>
-                        <input type="hidden" name="user_id"
->>>>>>> f7bece035ef50fb072fc38a1ec1cc79bf24c4a5e
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             value="{{ $user->id }}" readonly>
                     </div>
@@ -269,8 +262,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            var totalBiaya = parseFloat($('#total-biaya').val());
+            var totalBiaya = 0;
 
+            // Fungsi untuk menghitung kembalian
             function calculateKembalian() {
                 var bayar = parseFloat($('#input-bayar').val().replace('.', '').replace(',', '.'));
                 var kembalian = 0;
@@ -279,18 +273,8 @@
                 }
                 $('#total-kembalian').text(kembalian >= 0 ? kembalian.toFixed(2).replace('.', ',') : '0,00');
             }
-            $('#input-bayar').on('input', function() {
-                setTimeout(calculateKembalian, 0);
-            });
-            $('#input-bayar').on('keypress', function(event) {
-                if (event.which === 13) {
-                    event.preventDefault();
-                }
-            });
-        });
 
-        $(document).ready(function() {
-            var totalBiaya = 0;
+            // Event untuk menambah produk
             $('#tambahProduk').on('click', function() {
                 var selectedOption = $('#pilihProduk option:selected');
                 var produkId = selectedOption.val();
@@ -299,6 +283,7 @@
                 var produkStok = parseInt(selectedOption.data('stok'));
                 var quantity = 1;
                 var existingRow = $('#produkList tr[data-id="' + produkId + '"]');
+
                 if (existingRow.length > 0) {
                     var existingQuantity = parseInt(existingRow.find('.quantity').text());
                     existingRow.find('.quantity').text(existingQuantity + 1);
@@ -321,87 +306,30 @@
             `);
                     totalBiaya += totalHarga;
                 }
-<<<<<<< HEAD
 
-                // Update total biaya di input
-                $('#total-biaya').val(totalBiaya.toFixed(2)); // Simpan sebagai decimal
-=======
+                // Update total biaya
                 $('#total-biaya').val(totalBiaya.toLocaleString('id-ID'));
->>>>>>> f7bece035ef50fb072fc38a1ec1cc79bf24c4a5e
+                calculateKembalian(); // Panggil untuk menghitung kembalian setelah menambah produk
             });
-            function calculateKembalian() {
-                var bayar = parseFloat($('#input-bayar').val().replace('.', '').replace(',', '.'));
-                var kembalian = 0;
-                if (!isNaN(bayar)) {
-                    kembalian = bayar - totalBiaya;
-                }
-                $('#total-kembalian').text(kembalian >= 0 ? kembalian.toFixed(2).replace('.', ',') : '0,00');
-            }
+
+            // Event untuk menghitung kembalian saat input bayar berubah
             $('#input-bayar').on('input', function() {
-                setTimeout(calculateKembalian, 0);
+                calculateKembalian();
             });
+
+            // Fungsi untuk menghapus produk
             window.removeProduct = function(button) {
                 var row = $(button).closest('tr');
                 var quantity = parseInt(row.find('.quantity').text());
                 var hargaPerUnit = parseFloat(row.find('td:nth-child(3)').text().replace('Rp. ', '').replace(
-<<<<<<< HEAD
-                    '.', '').replace(',', '.')); // Ambil harga per unit
-                var totalHarga = hargaPerUnit * quantity; // Hitung total harga untuk quantity yang ada
-
-                totalBiaya -= totalHarga; // Kurangi total biaya
-                $('#total-biaya').val(totalBiaya.toFixed(2)); // Update total biaya
-                row.remove(); // Hapus baris dari tabel
-=======
                     '.', '').replace(',', '.'));
                 var totalHarga = hargaPerUnit * quantity;
+
                 totalBiaya -= totalHarga;
                 $('#total-biaya').val(totalBiaya.toLocaleString('id-ID'));
                 row.remove();
->>>>>>> f7bece035ef50fb072fc38a1ec1cc79bf24c4a5e
+                calculateKembalian(); // Panggil untuk menghitung kembalian setelah menghapus produk
             };
-        });
-
-        $('').on('click', function() {
-            var pelangganId = $('#pelanggan').val();
-            var userId = $('#kasir').val(); // Pastikan ini adalah ID user yang benar
-            var produk = [];
-
-            $('#produkList tr').each(function() {
-                var row = $(this);
-                var productId = row.data('id'); // Ambil ID produk dari data-id
-                var quantity = parseInt(row.find('.quantity').text()); // Ambil quantity dari kolom quantity
-                var hargaPerUnit = parseFloat(row.find('td:nth-child(3)').text().replace('Rp. ', '')
-                    .replace('.', '').replace(',', '.')); // Ambil harga per unit
-                var subtotal = hargaPerUnit * quantity; // Hitung subtotal
-
-                produk.push({
-                    id: productId,
-                    jumlah: quantity,
-                    subtotal: subtotal
-                });
-            });
-
-            // Kirim data ke server
-            $.ajax({
-                url: '/penjualan', // Ganti dengan URL yang sesuai
-                method: 'POST',
-                data: {
-                    pelanggan_id: pelangganId,
-                    user_id: userId,
-                    total_harga: totalBiaya, // Pastikan totalBiaya sudah dihitung
-                    produk: produk,
-                    _token: $('meta[name="csrf-token"]').attr('content') // Jika menggunakan CSRF
-                },
-                success: function(response) {
-                    // Tindakan setelah berhasil
-                    alert(response.message);
-                    // Reset form atau lakukan tindakan lain
-                },
-                error: function(xhr) {
-                    // Tindakan jika terjadi error
-                    alert('Terjadi kesalahan: ' + xhr.responseText);
-                }
-            });
         });
     </script>
 </x-layout>

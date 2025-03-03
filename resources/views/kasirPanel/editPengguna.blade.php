@@ -11,14 +11,14 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
                         <input type="username" name="username" id="username"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Masukan Nama Pengguna" value="{{ $pengguna->namaPengguna }}" required="">
+                            placeholder="Masukan Nama Pengguna" value="{{ $pengguna->username }}" required="">
                     </div>
                     <div class="col-span-2">
                         <label for="email"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                         <input type="email" name="email" id="email"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Masukan Email" required="">
+                            placeholder="Masukan Email" value="{{ $pengguna->email }}" required="">
                     </div>
                     <div class="col-span-2">
                         <label for="password"
@@ -34,7 +34,9 @@
                         <select id="role" name="role"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             @foreach ($roles as $role)
-                                <option value="{{ $role }}">{{ $role }}</option>
+                                <option value="{{ $role }}"
+                                    {{ (is_array($pengguna->role) ? in_array($role, $pengguna->role) : $pengguna->role == $role) ? 'selected' : '' }}>
+                                    {{ $role }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -47,7 +49,7 @@
                             d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                             clip-rule="evenodd"></path>
                     </svg>
-                    Add new Pengguna
+                    Update Data Pengguna
                 </button>
             </form>
         </div>

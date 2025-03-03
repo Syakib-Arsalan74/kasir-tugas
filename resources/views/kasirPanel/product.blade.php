@@ -66,7 +66,8 @@
                                 <span
                                     class="text-1xl font-bold text-gray-900 dark:text-white">Rp.{{ number_format($product->harga, 0, ',', '.') }}</span>
                                 <div class="flex items-center">
-                                    <a href="" data-modal-target="edit-modal" data-modal-toggle="edit-modal"
+                                    <a href="{{ route('edit.product', $product->id) }}" data-modal-target="edit-modal"
+                                        data-modal-toggle="edit-modal"
                                         class="bg-blue-500 hover:bg-blue-600 text-white px-1 py-1 rounded-md mr-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             strokeWidth="1.5" stroke="currentColor" class="size-6">

@@ -84,8 +84,8 @@
                                 <td class="border border-gray-200 p-2">{{ $user->role }}</td>
                                 <td class="border border-gray-200 p-2">
                                     <div class="flex items-center">
-                                        <a href="" data-modal-target="edit-modal" data-modal-toggle="edit-modal"
-                                            id="edit-pengguna"
+                                        <a href="{{ route('edit.pengguna', $user->id) }}" data-modal-target="edit-modal"
+                                            data-modal-toggle="edit-modal" id="edit-pengguna"
                                             class="bg-blue-500 hover:bg-blue-600 text-white px-1 py-1 rounded-md mr-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 strokeWidth="1.5" stroke="currentColor" class="size-6">

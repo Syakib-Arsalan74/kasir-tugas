@@ -32,9 +32,6 @@ class PenjualanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-<<<<<<< HEAD
-    public function store(Request $request) {}
-=======
     public function store(Request $request)
     {
         dd($request->all());
@@ -67,7 +64,6 @@ class PenjualanController extends Controller
 
         return redirect()->back()->with('status', 'Transaksi berhasil disimpan!');
     }
->>>>>>> f7bece035ef50fb072fc38a1ec1cc79bf24c4a5e
 
     /**
      * Display the specified resource.

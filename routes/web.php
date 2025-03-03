@@ -1,13 +1,14 @@
 <?php
 
+use App\Models\Penjualan;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenjualanController;
-use App\Models\Penjualan;
 
 Route::get('/', function () {
     return view('home');

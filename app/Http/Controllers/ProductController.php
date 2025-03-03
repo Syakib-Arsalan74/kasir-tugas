@@ -63,17 +63,25 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function editProduk(Product $product)
     {
-        //
+        $data = Product::where('id', $product->id)->first();
+        return view('kasirPanel.editProduct', ['produk' => $data,]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function updateProduk(Request $request, $product)
     {
-        //
+        $data = Product::where('id', $product)->firstOrFail();
+        $valideData = $request->validate([
+            'namaProduk' => 'required|string|max:255',
+            'harga' => 'required|numeric|min:0',
+            'stok' => 'required|integer|min:0',
+        ]);
+        $data->update($valideData);
+        return redirect()->route('product')->with('success', 'Produk berhasil ditambahkan');
     }
 
     /**
