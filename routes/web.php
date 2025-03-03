@@ -45,3 +45,5 @@ Route::post('/product', [ProductController::class, 'createProduk'])->name('tamba
 Route::get('/product/{id}/edit', [ProductController::class, 'editProduk'])->name('edit.product')->middleware('auth');
 Route::put('/product/{id}', [ProductController::class, 'updateProduk'])->name('update.product')->middleware('auth');
 route::delete('/product/{product}', [ProductController::class, 'destroyProduk'])->name('hapus.product')->middleware('auth');
+
+Route::get('/penjualan/Download-pdf', [PdfController::class, 'generatePDf']);
