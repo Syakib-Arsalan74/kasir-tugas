@@ -42,26 +42,21 @@ class PelangganController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pelanggan $pelanggan)
+    public function editPelanggan(Pelanggan $pelanggan)
     {
-        //
+        $pelanggan = Pelanggan::where('id', $pelanggan->id)->first();
+        return view('kasirPanel.editPelanggan', ['pelanggan' => $pelanggan] );
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function editPelanggan($id)
-    {
-        $data = Pelanggan::where('id', $id)->first();
-        return response()->json(['result' => $data]);
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function updatePelanggan(Request $request, $id)
     {
-        dd($id);
         $data = Pelanggan::where('id', $id)->first();
         $validateData = $request->validate([
             'namaPelanggan' => 'required|max:255',

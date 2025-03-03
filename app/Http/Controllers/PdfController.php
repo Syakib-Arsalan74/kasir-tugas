@@ -9,7 +9,6 @@ class PdfController extends Controller
 {
     public function generatePDF () {
         $data = [];
-        
         $pdf = PDF::loadView('createPdf', $data);
         $pdf->setOption('isRemoteEnabled', true);
         $pdf->setPaper('a4', 'portrait');

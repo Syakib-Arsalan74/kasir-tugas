@@ -31,16 +31,29 @@
         <div class="p-4 border-2 border-gray-200 rounded-lg dark:border-gray-700 overflow-x-auto text-xs sm:text-base">
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-semibold text-gray-900">Penjualan</h1>
-                <div class="flex items-center">
-                    <a
-                        class="bg-green-500 hover:bg-green-600 text-white p-1 sm:p-2 text-xs sm:text-base hover:cursor-pointer rounded-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-Width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-Linecap="round" stroke-Linejoin="round"
-                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                        </svg>
-                        <span class="sr-only">Download Pdf</span>
-                    </a>
+                <div class="flex justify-between">
+                    <div class="flex items-center m-1">
+                        <a
+                            class="bg-green-500 hover:bg-green-600 text-white p-1 sm:p-2 text-xs sm:text-base hover:cursor-pointer rounded-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-Width="1.5"
+                                stroke="currentColor" class="size-6">
+                                <path stroke-Linecap="round" stroke-Linejoin="round"
+                                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                            <span class="sr-only">Download Pdf</span>
+                        </a>
+                    </div>
+                    <div class="flex items-center m-1">
+                        <a
+                            class="bg-red-500 hover:bg-red-600 text-white p-1 sm:p-2 text-xs sm:text-base hover:cursor-pointer rounded-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-Width="1.5"
+                                stroke="currentColor" class="size-6">
+                                <path stroke-Linecap="round" stroke-Linejoin="round"
+                                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                            <span class="sr-only">Download Pdf</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="flex justify-between">
@@ -84,9 +97,12 @@
                         <label for="kasir" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kasir
                             Saat ini
                             :</label>
-                        <input type="username" name="user_id" id="kasir"
+                        <input type="username" id="kasir"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            value="{{ $user }}" readonly>
+                            value="{{ $user->username }}" readonly>
+                        <input type="hidden" name="user_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            value="{{ $user->id }}" readonly>
                     </div>
                     <div class="col-span-4 row-span-6 mt-2 ">
                         <h1 class="text-xl font-bold mb-4">Pembelian :</h1>
@@ -152,7 +168,7 @@
                             class="p-2 border-2 border-gray-200 rounded-md dark:border-gray-700 overflow-x-auto text-xs sm:text-base">
                             <div>
                                 <p class="m-1">Total Biaya :</p>
-                                <input type="text" id="total-biaya" name="totalHarga"
+                                <input type="number" id="total-biaya" name="totalHarga"
                                     class="w-full h-full text-xs border-1 border-gray-200 rounded-sm sm:p-3"
                                     value="" readonly>
                             </div>
@@ -232,7 +248,7 @@
                                     {{ $item->created_at->format('d-m-Y') }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('penjualan.show', $item->id) }}"
+                                    <a href="{{ route('penjualan.detail', $item->id) }}"
                                         class="text-blue-600 hover:text-blue-900">Detail</a>
                                 </td>
                             </tr>
@@ -268,34 +284,22 @@
 
         $(document).ready(function() {
             var totalBiaya = 0;
-
-            // Fungsi untuk menambah produk ke tabel
             $('#tambahProduk').on('click', function() {
                 var selectedOption = $('#pilihProduk option:selected');
                 var produkId = selectedOption.val();
                 var produkNama = selectedOption.text();
                 var produkHarga = parseFloat(selectedOption.data('harga'));
                 var produkStok = parseInt(selectedOption.data('stok'));
-                var quantity = 1; // Default quantity
-
-                // Cek apakah produk sudah ada di tabel
+                var quantity = 1;
                 var existingRow = $('#produkList tr[data-id="' + produkId + '"]');
                 if (existingRow.length > 0) {
-                    // Jika produk sudah ada, tambahkan quantity
                     var existingQuantity = parseInt(existingRow.find('.quantity').text());
                     existingRow.find('.quantity').text(existingQuantity + 1);
-
-                    // Update total harga untuk produk yang ditambahkan
                     var newTotalHarga = produkHarga * (existingQuantity + 1);
                     existingRow.find('.total-harga').text('Rp. ' + newTotalHarga.toLocaleString('id-ID'));
-
-                    // Update total biaya
-                    totalBiaya += produkHarga; // Tambah harga produk
+                    totalBiaya += produkHarga;
                 } else {
-                    // Hitung total harga untuk produk yang ditambahkan
                     var totalHarga = produkHarga * quantity;
-
-                    // Tambahkan produk ke tabel
                     $('#produkList').append(`
                 <tr data-id="${produkId}">
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${$('#produkList tr').length + 1}</td>
@@ -308,45 +312,30 @@
                     </td>
                 </tr>
             `);
-
-                    // Update total biaya
-                    totalBiaya += totalHarga; // Tambah total harga produk
+                    totalBiaya += totalHarga;
                 }
-
-                // Update total biaya di input
                 $('#total-biaya').val(totalBiaya.toLocaleString('id-ID'));
             });
-
-            // Fungsi untuk menghitung kembalian
             function calculateKembalian() {
                 var bayar = parseFloat($('#input-bayar').val().replace('.', '').replace(',', '.'));
                 var kembalian = 0;
-
-                // Hitung kembalian jika bayar valid
                 if (!isNaN(bayar)) {
-                    kembalian = bayar - totalBiaya; // Ganti totalBiaya dengan totalBiaya yang benar
+                    kembalian = bayar - totalBiaya;
                 }
-
-                // Tampilkan kembalian
                 $('#total-kembalian').text(kembalian >= 0 ? kembalian.toFixed(2).replace('.', ',') : '0,00');
             }
-
-            // Event listener untuk input bayar
             $('#input-bayar').on('input', function() {
-                setTimeout(calculateKembalian, 0); // Menjalankan fungsi secara asynchronous
+                setTimeout(calculateKembalian, 0);
             });
-
-            // Fungsi untuk menghapus produk dari tabel
             window.removeProduct = function(button) {
                 var row = $(button).closest('tr');
                 var quantity = parseInt(row.find('.quantity').text());
                 var hargaPerUnit = parseFloat(row.find('td:nth-child(3)').text().replace('Rp. ', '').replace(
-                    '.', '').replace(',', '.')); // Ambil harga per unit
-                var totalHarga = hargaPerUnit * quantity; // Hitung total harga untuk quantity yang ada
-
-                totalBiaya -= totalHarga; // Kurangi total biaya
-                $('#total-biaya').val(totalBiaya.toLocaleString('id-ID')); // Update total biaya
-                row.remove(); // Hapus baris dari tabel
+                    '.', '').replace(',', '.'));
+                var totalHarga = hargaPerUnit * quantity;
+                totalBiaya -= totalHarga;
+                $('#total-biaya').val(totalBiaya.toLocaleString('id-ID'));
+                row.remove();
             };
         });
     </script>

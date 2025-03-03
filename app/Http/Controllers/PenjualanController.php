@@ -18,7 +18,7 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        return view('kasirPanel.penjualan', ['penjualan' => Penjualan::all(), 'pelanggans' => Pelanggan::all(), 'user' => Auth::user()->username, 'produks' => Product::all()]);
+        return view('kasirPanel.penjualan', ['penjualan' => Penjualan::all(), 'pelanggans' => Pelanggan::all(), 'user' => Auth::user(), 'produks' => Product::all()]);
     }
 
     /**
@@ -34,6 +34,7 @@ class PenjualanController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         // Validasi input
         $request->validate([
             'pelanggan_id' => 'required|exists:pelanggans,id',
