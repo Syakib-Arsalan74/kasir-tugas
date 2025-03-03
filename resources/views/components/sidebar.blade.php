@@ -7,7 +7,7 @@
         <ul class="space-y-2 font-medium">
             <li>
                 <a href="{{ route('dashboard') }}"
-                    class="flex items-center p-2 {{ request()->is('dashboard') ? 'bg-gray-100 dark:bg-gray-700' : 'text-gray-900 dark:text-white' }} rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    class="flex items-center p-2 {{ request()->is('dashboard') ? 'bg-gray-100 dark:bg-gray-700 dark:text-white' : 'text-gray-900 dark:text-white' }} rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="{{ request()->is('dashboard') ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400' }} w-5 h-5 transition duration-75 group-hover:text-gray-900 dark:group-hover:text-white"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                         <path

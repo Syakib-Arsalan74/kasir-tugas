@@ -26,7 +26,7 @@ Route::get('/register', [AuthController::class, 'viewRegister'])->name('register
 Route::post('/register/submit', [AuthController::class, 'register'])->name('submit.register')->middleware('guest');
 
 Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan')->middleware('auth');
-Route::post('/penjualan', [PenjualanController::class, 'store'])->middleware('auth');
+Route::post('/penjualan', [PenjualanController::class, 'store'])->name('tambah.penjualan')->middleware('auth');
 
 Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna')->middleware('auth');
 Route::post('/pengguna', [PenggunaController::class, 'createPengguna'])->name('tambah.pengguna')->middleware('auth');

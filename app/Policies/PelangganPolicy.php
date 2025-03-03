@@ -8,6 +8,10 @@ use Illuminate\Auth\Access\Response;
 
 class PelangganPolicy
 {
+    public function aksesPelanggan(User $user)
+    {
+        $user->role == 'admin';
+    }
     /**
      * Determine whether the user can view any models.
      */

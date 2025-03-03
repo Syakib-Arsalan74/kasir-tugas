@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PenggunaController extends Controller
 {
+    use AuthorizesRequests;
     function index()
     {
+        $this->authorize('aksesPengguna', User::class);
         return view('kasirPanel.pengguna', ['users' => User::search(request(['search', 'role']))->latest()->get(), 'roles' => ['kasir', 'admin']]);
     }
 

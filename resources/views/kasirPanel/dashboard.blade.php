@@ -40,7 +40,7 @@
                                 Total Pembayaran
                             </p>
                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                {{ }}
+
                             </p>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                                 Total transaksi
                             </p>
                             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                {{ }}
+
                             </p>
                         </div>
                     </div>

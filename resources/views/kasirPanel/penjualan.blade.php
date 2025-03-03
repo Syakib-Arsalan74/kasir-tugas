@@ -66,7 +66,7 @@
                 </form>
             </div>
             <div class="mt-4">
-                <form action="" method="post" class="grid gap-3 sm:grid-cols-6">
+                <form action="{{ route('tambah.penjualan') }}" method="post" class="grid gap-3 sm:grid-cols-6">
                     @csrf
                     <div>
                         <label for="pelanggan"
@@ -84,9 +84,12 @@
                         <label for="kasir" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kasir
                             Saat ini
                             :</label>
-                        <input type="username" name="user_id" id="kasir"
+                        <input type="username"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            value="{{ $user }}" readonly>
+                            value="{{ $user->username }}" readonly>
+                        <input type="hidden" name="user_id" id="kasir"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            value="{{ $user->id }}" readonly>
                     </div>
                     <div class="col-span-4 row-span-6 mt-2 ">
                         <h1 class="text-xl font-bold mb-4">Pembelian :</h1>
@@ -96,7 +99,7 @@
                                 Produk :</label>
                             <div class="grid grid-cols-3">
                                 <div class="mb-2">
-                                    <select id="pilihProduk" name="produk"
+                                    <select id="pilihProduk"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         @foreach ($produks as $produk)
                                             <option value="{{ $produk->id }}" data-harga="{{ $produk->harga }}"
@@ -169,7 +172,7 @@
                                 <p id="total-kembalian"></p>
                             </div>
                             <div class="my-2">
-                                <button type="submit"
+                                <button type="submit" id="addNewTransaksi"
                                     class="text-white w-full h-full inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -314,7 +317,7 @@
                 }
 
                 // Update total biaya di input
-                $('#total-biaya').val(totalBiaya.toLocaleString('id-ID'));
+                $('#total-biaya').val(totalBiaya.toFixed(2)); // Simpan sebagai decimal
             });
 
             // Fungsi untuk menghitung kembalian
@@ -345,9 +348,52 @@
                 var totalHarga = hargaPerUnit * quantity; // Hitung total harga untuk quantity yang ada
 
                 totalBiaya -= totalHarga; // Kurangi total biaya
-                $('#total-biaya').val(totalBiaya.toLocaleString('id-ID')); // Update total biaya
+                $('#total-biaya').val(totalBiaya.toFixed(2)); // Update total biaya
                 row.remove(); // Hapus baris dari tabel
             };
+        });
+
+        $('').on('click', function() {
+            var pelangganId = $('#pelanggan').val();
+            var userId = $('#kasir').val(); // Pastikan ini adalah ID user yang benar
+            var produk = [];
+
+            $('#produkList tr').each(function() {
+                var row = $(this);
+                var productId = row.data('id'); // Ambil ID produk dari data-id
+                var quantity = parseInt(row.find('.quantity').text()); // Ambil quantity dari kolom quantity
+                var hargaPerUnit = parseFloat(row.find('td:nth-child(3)').text().replace('Rp. ', '')
+                    .replace('.', '').replace(',', '.')); // Ambil harga per unit
+                var subtotal = hargaPerUnit * quantity; // Hitung subtotal
+
+                produk.push({
+                    id: productId,
+                    jumlah: quantity,
+                    subtotal: subtotal
+                });
+            });
+
+            // Kirim data ke server
+            $.ajax({
+                url: '/penjualan', // Ganti dengan URL yang sesuai
+                method: 'POST',
+                data: {
+                    pelanggan_id: pelangganId,
+                    user_id: userId,
+                    total_harga: totalBiaya, // Pastikan totalBiaya sudah dihitung
+                    produk: produk,
+                    _token: $('meta[name="csrf-token"]').attr('content') // Jika menggunakan CSRF
+                },
+                success: function(response) {
+                    // Tindakan setelah berhasil
+                    alert(response.message);
+                    // Reset form atau lakukan tindakan lain
+                },
+                error: function(xhr) {
+                    // Tindakan jika terjadi error
+                    alert('Terjadi kesalahan: ' + xhr.responseText);
+                }
+            });
         });
     </script>
 </x-layout>

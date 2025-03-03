@@ -8,6 +8,10 @@ use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
+    public function aksesProduct(User $user)
+    {
+        $user->role == 'admin';
+    }
     /**
      * Determine whether the user can view any models.
      */
