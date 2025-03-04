@@ -34,33 +34,31 @@ class PenjualanController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         // Validasi input
         $request->validate([
             'pelanggan_id' => 'required|exists:pelanggans,id',
             'user_id' => 'required|exists:users,id',
-            'produk' => 'required|array',
-            'produk.*.id' => 'required|exists:products,id',
-            'produk.*.jumlah' => 'required|integer|min:1',
-            'produk.*.subtotal' => 'required|numeric',
+            'totalHarga' => 'required',
+            // 'produk' => 'required|array',
+            // 'produk.*.id' => 'required|exists:products,id',
+            // 'produk.*.jumlah' => 'required|integer|min:1',
+            // 'produk.*.subtotal' => 'required|numeric',
         ]);
 
-        // Simpan data penjualan
         $penjualan = Penjualan::create([
-            'totalHarga' => $request->total_harga, // Pastikan ini dikirim dari frontend
+            'totalHarga' => $request->totalHarga,
             'pelanggan_id' => $request->pelanggan_id,
             'user_id' => $request->user_id,
         ]);
 
-        // Simpan detail penjualan
-        foreach ($request->produk as $item) {
-            DetailPenjualan::create([
-                'penjualan_id' => $penjualan->id,
-                'product_id' => $item['id'],
-                'jumlah' => $item['jumlah'],
-                'subtotal' => $item['subtotal'],
-            ]);
-        }
+        // foreach ($request->produk as $item) {
+        //     DetailPenjualan::create([
+        //         'penjualan_id' => $penjualan->id,
+        //         'product_id' => $item['id'],
+        //         'jumlah' => $item['jumlah'],
+        //         'subtotal' => $item['subtotal'],
+        //     ]);
+        // }
 
         return redirect()->back()->with('status', 'Transaksi berhasil disimpan!');
     }

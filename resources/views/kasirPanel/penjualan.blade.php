@@ -318,7 +318,7 @@
 
                 // Update total biaya
                 $('#total-biaya').val(totalBiaya.toLocaleString('id-ID'));
-                calculateKembalian(); // Panggil untuk menghitung kembalian setelah menambah produk
+                calculateKembalian();
             });
 
             // Event untuk menghitung kembalian saat input bayar berubah
