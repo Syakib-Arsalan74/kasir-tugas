@@ -35,12 +35,21 @@
                     <div class="flex items-center m-1">
                         <a
                             class="bg-green-500 hover:bg-green-600 text-white p-1 sm:p-2 text-xs sm:text-base hover:cursor-pointer rounded-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-Width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-Linecap="round" stroke-Linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859M12 3v8.25m0 0-3-3m3 3 3-3" />
+                            </svg>
+                            <span class="sr-only">import excel</span>
+                        </a>
+                    </div>
+                    <div class="flex items-center m-1">
+                        <a
+                            class="bg-green-500 hover:bg-green-600 text-white p-1 sm:p-2 text-xs sm:text-base hover:cursor-pointer rounded-md">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-Width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-Linecap="round" stroke-Linejoin="round"
                                     d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                             </svg>
-                            <span class="sr-only">Download Pdf</span>
+                            <span class="sr-only">Download excel</span>
                         </a>
                     </div>
                     <div class="flex items-center m-1">

@@ -29,22 +29,22 @@ Route::post('/register/submit', [AuthController::class, 'register'])->name('subm
 Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan')->middleware('auth');
 Route::post('/penjualan', [PenjualanController::class, 'store'])->name('tambah.penjualan')->middleware('auth');
 
-Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna')->middleware('auth');
-Route::post('/pengguna', [PenggunaController::class, 'createPengguna'])->name('tambah.pengguna')->middleware('auth');
-Route::get('/pengguna/{pengguna}/edit', [PenggunaController::class, 'editPengguna'])->name('edit.pengguna')->middleware('auth');
-Route::put('/pengguna/{pengguna}', [PenggunaController::class, 'updatePengguna'])->name('update.pengguna')->middleware('auth');
-Route::delete('/pengguna/{pengguna}', [PenggunaController::class, 'destroyPengguna'])->name('hapus.pengguna')->middleware('auth');
+Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna')->middleware('admin');
+Route::post('/pengguna', [PenggunaController::class, 'createPengguna'])->name('tambah.pengguna')->middleware('admin');
+Route::get('/pengguna/{pengguna}/edit', [PenggunaController::class, 'editPengguna'])->name('edit.pengguna')->middleware('admin');
+Route::put('/pengguna/{pengguna}', [PenggunaController::class, 'updatePengguna'])->name('update.pengguna')->middleware('admin');
+Route::delete('/pengguna/{pengguna}', [PenggunaController::class, 'destroyPengguna'])->name('hapus.pengguna')->middleware('admin');
 
-Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan')->middleware('auth');
-Route::post('/pelanggan', [PelangganController::class, 'createPelanggan'])->name('tambah.pelanggan')->middleware('auth');
-Route::get('/pelanggan/{pelanggan}/edit', [PelangganController::class, 'editPelanggan'])->name('edit.pelanggan')->middleware('auth');
-Route::put('/pelanggan/{pelanggan}', [PelangganController::class, 'updatePelanggan'])->name('update.pelanggan')->middleware('auth');
-Route::delete('/pelanggan/{pelanggan}', [PelangganController::class, 'destroyPelanggan'])->name('hapus.pelanggan')->middleware('auth');
+Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan')->middleware('admin');
+Route::post('/pelanggan', [PelangganController::class, 'createPelanggan'])->name('tambah.pelanggan')->middleware('admin');
+Route::get('/pelanggan/{pelanggan}/edit', [PelangganController::class, 'editPelanggan'])->name('edit.pelanggan')->middleware('admin');
+Route::put('/pelanggan/{pelanggan}', [PelangganController::class, 'updatePelanggan'])->name('update.pelanggan')->middleware('admin');
+Route::delete('/pelanggan/{pelanggan}', [PelangganController::class, 'destroyPelanggan'])->name('hapus.pelanggan')->middleware('admin');
 
-Route::get('/product', [ProductController::class, 'index'])->name('product')->middleware('auth');
-Route::post('/product', [ProductController::class, 'createProduk'])->name('tambah.product')->middleware('auth');
-Route::get('/product/{product}/edit', [ProductController::class, 'editProduk'])->name('edit.product')->middleware('auth');
-Route::put('/product/{product}', [ProductController::class, 'updateProduk'])->name('update.product')->middleware('auth');
-route::delete('/product/{product}', [ProductController::class, 'destroyProduk'])->name('hapus.product')->middleware('auth');
+Route::get('/product', [ProductController::class, 'index'])->name('product')->middleware('admin');
+Route::post('/product', [ProductController::class, 'createProduk'])->name('tambah.product')->middleware('admin');
+Route::get('/product/{product}/edit', [ProductController::class, 'editProduk'])->name('edit.product')->middleware('admin');
+Route::put('/product/{product}', [ProductController::class, 'updateProduk'])->name('update.product')->middleware('admin');
+route::delete('/product/{product}', [ProductController::class, 'destroyProduk'])->name('hapus.product')->middleware('admin');
 
 Route::get('/penjualan/Download-pdf', [PdfController::class, 'generatePDf']);

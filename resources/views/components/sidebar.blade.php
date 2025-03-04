@@ -43,6 +43,7 @@
                     </button>
                 </form>
             </li>
+            @can('admin')
             <h1 class="text-sm font-medium ml-17 my-4 text-gray-500">Administrator</h1>
             <li>
                 <a href="{{ route('pengguna') }}"
@@ -79,6 +80,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Produk</span>
                 </a>
             </li>
+            @endcan
         </ul>
     </div>
 </aside>
