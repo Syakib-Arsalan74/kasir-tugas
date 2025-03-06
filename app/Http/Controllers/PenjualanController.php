@@ -24,9 +24,9 @@ class PenjualanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function createPenjualan()
     {
-        //
+        return view('kasirPanel.tambahPenjualan',  ['penjualan' => Penjualan::all(), 'pelanggans' => Pelanggan::all(), 'user' => Auth::user(), 'produks' => Product::all()]);
     }
 
     /**
